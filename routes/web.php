@@ -12,23 +12,23 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('home');
 });
 
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+// Auth::routes();
+// Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::group(['middleware' => 'auth'], function () {
+// Route::group(['middleware' => 'auth'], function () {
 
-    Route::resource('categories','CategoriesController', ['except' => [
-        'show'
-    ]]);
-    Route::resource('recipes','RecipesController');
+//     Route::resource('categories','CategoriesController', ['except' => [
+//         'show'
+//     ]]);
+//     Route::resource('recipes','RecipesController');
 
-    Route::get('recipes','RecipesController@index');
-    Route::get('recipes/create','RecipesController@create');
-    Route::post('recipes','RecipesController@store');
-    Route::post('videos/store','VideosController@store');
+//     Route::get('recipes','RecipesController@index');
+//     Route::get('recipes/create','RecipesController@create');
+//     Route::post('recipes','RecipesController@store');
+//     Route::post('videos/store','VideosController@store');
 
-});
+// });
