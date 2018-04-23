@@ -11,70 +11,133 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
+
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    @yield('top-script')
+
 </head>
-<body>
+<body class="bg-light">
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+             <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar" class="border-right bg-white">
+                <div id="dismiss">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
                 </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
+                <ul class="list-unstyled components">
+                    <p class="text-dark">
+                      <span data-feather="arrow-left"></span>
+                      Back
+                    </p>
+                    <li class="active bg-top">
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Recipes</a>
+                    </li>
+                    <li>
+                        <a href="#">Categories</a>
+                    </li>
+                    <li>
+                        <a href="#">Users</a>
+                    </li>
+                    <li>
+                        <a href="#">Settings</a>
+                    </li>
+                </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                <ul class="list-unstyled components align-bottom border-top" style="bottom: 0; position: fixed; width: 250px;">
+                  <li class="pl-2 text-muted">
+                    Version 1.0
+                  </li>
+                </ul>
 
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+       
+            </nav>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endguest
-                    </ul>
+            <!-- Page Content Holder -->
+            <div id="content" class="pt-0 px-0">
+
+
+                <header>
+              <!-- Fixed navbar -->
+              <nav class="navbar navbar-expand-md navbar-dark  bg-warning border-bottom p-3 ">
+                <a class="navbar-brand " id="sidebarCollapse"  style="font-size: 16px;" href="javascript:void(0);">
+                  <span data-feather="menu" class="mr-2 align-middle" style="height: 30px; width: auto;"></span>
+                  Amigo Panadero
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                  <form class="form-inline w-75 ml-auto">
+                    <input class="search form-control w-100 rounded" type="search" placeholder="Search" aria-label="Search">
+                  </form>
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                  </ul>
                 </div>
+              </nav>
+            </header>
+
+              <!-- Begin page content -->
+              <main role="main" class="container main-content">
+
+                  <router-view></router-view>
+                    @yield('content')
+                    
+              </main>
+
             </div>
-        </nav>
+        </div>
 
-        @yield('content')
-    </div>
+
+
+      
+
+    </div><!-- end app -->
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/all.js') }}"></script>    
+    <!-- Icons -->
+    <script src="{{ asset('js/feather.min.js') }}"></script>
+  
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+     @yield('bottom-script')
+
+      <script type="text/javascript">
+            $(document).ready(function () {
+                $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
+
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar, #content').toggleClass('active');
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                });
+            });
+      </script>
+
 </body>
 </html>

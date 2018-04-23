@@ -11,6 +11,8 @@ class Recipe extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'video',
+        'featured',
         'title',
         'description'
     ];
@@ -28,19 +30,11 @@ class Recipe extends Model
     }
 
     /**
-     * Linked Asset / Video from a recipe
+     * Video Linked to a recipe
      */
-    public function asset()
+    public function video()
     {
-        return $this->belongsTo(Asset::class);
-    }
-
-    /**
-     * Linked featured Image to a recipe
-     */
-    public function feature()
-    {
-        return $this->belongsTo(Feature::class);
+        return $this->belongsTo(Video::class);
     }
 
     /**

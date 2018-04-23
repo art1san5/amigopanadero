@@ -35,4 +35,12 @@ class User extends Authenticatable
         return $this->hasMany(Recipe::class);
     }
 
+    /**
+     * List of vidoes updated by a user
+     */
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
 }

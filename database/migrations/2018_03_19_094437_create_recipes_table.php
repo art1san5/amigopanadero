@@ -16,8 +16,8 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('asset_id')->unsigned();
-            $table->integer('feature_id')->unsigned();
+            $table->integer('video_id')->unsigned();
+            $table->string('featured')->default('features/placeholder.png');
             $table->string('title');
             $table->string('description');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
