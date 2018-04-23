@@ -14,9 +14,9 @@ class Category extends Model
     /**
      * Linked categories to a recipe
      */
-    public function recipes()
+    public function recipe()
     {
-        return $this->hasMany(Recipe::class);
+        return $this->hasOne(Recipe::class);
     }
 
     /**
