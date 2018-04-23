@@ -11,15 +11,33 @@ class Recipe extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'video',
         'featured',
         'title',
-        'description'
+        'ingredients',
+        'procedure',
     ];
 
     protected $dates = [
         'deleted_at'
     ];
+
+    // protected $casts = [
+    //     'ingredients' => 'array',
+    //     'procedure' => 'array',
+    // ];
+
+    /**
+     * Convet array to string conversion
+     */
+    public function setIngredientsAttribute($value)
+    {
+        $this->attributes['ingredients'] = json_encode($value);
+    }
+
+    public function setProcedureAttribute($value)
+    {
+        $this->attributes['procedure'] = json_encode($value);
+    }
 
     /**
      *  User who created a recipe
@@ -40,13 +58,8 @@ class Recipe extends Model
     /**
      * List all categories linked to recipes
      */
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class);
-    }
-
-    public function getCategoryListAttribute()
-    {
-        return $this->categories->pluck('id')->all();
+        return $this->belongsTo(Category::class);
     }
 }

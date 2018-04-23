@@ -51,12 +51,18 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'phone_number' => 'required',
+            'age' => 'required',
+            'gender' => 'required'
         ]);
 
         $user = User::create([
     		'name' => request('name'),
     		'email' => request('email'),
-    		'password' => bcrypt(request('password'))
+            'password' => bcrypt(request('password')),
+            'phone_number' => request('phone_number'),
+            'age' => request('age'),
+            'gender' => request('gender')
         ]);
         
         $success['token'] = $user->createToken('AmigoPanadero')->accessToken;

@@ -17,9 +17,11 @@ class CreateRecipesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('video_id')->unsigned();
+            $table->integer('category_id')->unsigned();
             $table->string('featured')->default('features/placeholder.png');
             $table->string('title');
-            $table->string('description');
+            $table->string('ingredients');
+            $table->string('procedure');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

@@ -16,7 +16,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 
+        'email',
+        'phone_number',
+        'gender',
+        'age', 
+        'password',
     ];
 
     /**
@@ -42,6 +47,14 @@ class User extends Authenticatable
     public function videos()
     {
         return $this->hasMany(Video::class);
+    }
+
+    /**
+     * List of categories created by a user
+     */
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
     }
 
 }

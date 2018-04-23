@@ -24,4 +24,17 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::post('get-details','API\AuthController@getDetails');
 
+    // Featured Recipes
+
+    // Categories
+
+    // Recipes under categories
+
+    //products
+
+    //Feed recipes
+
+    // about Company
+
+
 });

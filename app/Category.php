@@ -7,19 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $fillabe = [
-        'name'
-    ];
+        'name',
+        'category_image'
+    ]; 
 
     /**
      * Linked categories to a recipe
      */
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class);
+        return $this->hasMany(Recipe::class);
     }
 
-    public function getRecipeListAttribute()
+    /**
+     * Return user who created a category
+     * 
+     */
+    public function user()
     {
-        return $this->recipes->pluck('id')->all();
+        return $this->belongsTo(User::class);
     }
 }
