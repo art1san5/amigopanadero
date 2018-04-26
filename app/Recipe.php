@@ -21,6 +21,15 @@ class Recipe extends Model
         'deleted_at'
     ];
 
+    protected $hidden = [
+        'video_id',
+        'category_id',
+        'user_id',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     // protected $casts = [
     //     'ingredients' => 'array',
     //     'procedure' => 'array',

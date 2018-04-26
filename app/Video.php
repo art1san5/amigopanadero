@@ -18,6 +18,10 @@ class Video extends Model
         'deleted_at'
     ];
 
+    protected $visible = [
+        'path'
+    ];
+
     /**
      *  User who created a recipe
      */

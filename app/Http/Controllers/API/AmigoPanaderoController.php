@@ -28,11 +28,35 @@ class AmigoPanaderoController extends Controller
     public function featured()
     {
         $featured = Recipe::orderBy('id','DESC')
-                        ->with('video','category')
+                        ->with('category','video')
                         ->take(5)
                         ->get();
         
         return $featured;
+    }
+
+    /**
+     * Show video
+     */
+    public function recipeVideo($recipe)
+    {
+        $recipe = Recipe::where('id',$recipe)
+                        ->with('video','category')
+                        ->get();
+        return $recipe;
+    }
+
+    /**
+     * Show the rest of recipes for search API
+     */
+    public function recipeSearch()
+    {
+        $recipes = Recipe::orderBy('id','DESC')
+                    ->with('category','video')
+                    ->get();
+        
+        return $recipes;
+            
     }
 
     /**
@@ -71,8 +95,10 @@ class AmigoPanaderoController extends Controller
      */
     public function recipesFeed()
     {
-        $feed = Recipe::orderBy('id','DESC')
+        $feed = Recipe::select('id','category_id','featured','title')
+                    ->orderBy('id','DESC')
                     ->whereNotIn('id',$this->featured()->pluck('id'))
+                    ->with('category')
                     ->take(20)
                     ->get();
         

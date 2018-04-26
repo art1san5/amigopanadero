@@ -11,6 +11,12 @@ class Category extends Model
         'category_image'
     ]; 
 
+    protected $visible = [
+        'id',
+        'name',
+        'category_image'
+    ];
+
     /**
      * Linked categories to a recipe
      */
