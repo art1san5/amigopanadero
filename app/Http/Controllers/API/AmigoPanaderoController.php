@@ -82,6 +82,7 @@ class AmigoPanaderoController extends Controller
                     ->whereHas('category', function($q) use ($category) {
                         $q->where('id',$category);
                     })
+                    ->with('category','video')
                     ->get();
         
         return $recipes;
@@ -95,10 +96,9 @@ class AmigoPanaderoController extends Controller
      */
     public function recipesFeed()
     {
-        $feed = Recipe::select('id','category_id','featured','title')
-                    ->orderBy('id','DESC')
+        $feed = Recipe::orderBy('id','DESC')
                     ->whereNotIn('id',$this->featured()->pluck('id'))
-                    ->with('category')
+                    ->with('category','video')
                     ->take(20)
                     ->get();
         

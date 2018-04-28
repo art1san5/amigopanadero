@@ -20,8 +20,9 @@ class CreateRecipesTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->string('featured')->default('features/placeholder.png');
             $table->string('title');
-            $table->string('ingredients');
-            $table->string('procedure');
+            $table->longText('sponge');
+            $table->longText('dough');
+            $table->longText('procedure');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

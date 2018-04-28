@@ -13,7 +13,8 @@ class Recipe extends Model
     protected $fillable = [
         'featured',
         'title',
-        'ingredients',
+        'sponge',
+        'dough',
         'procedure',
     ];
 
@@ -30,23 +31,24 @@ class Recipe extends Model
         'deleted_at'
     ];
 
-    // protected $casts = [
-    //     'ingredients' => 'array',
-    //     'procedure' => 'array',
-    // ];
+    protected $casts = [
+        'sponge' => 'array',
+        'dough' => 'array',
+        'procedure' => 'array',
+    ];
 
     /**
      * Convet array to string conversion
      */
-    public function setIngredientsAttribute($value)
-    {
-        $this->attributes['ingredients'] = json_encode($value);
-    }
+    // public function setIngredientsAttribute($value)
+    // {
+    //     $this->attributes['ingredients'] = json_encode($value);
+    // }
 
-    public function setProcedureAttribute($value)
-    {
-        $this->attributes['procedure'] = json_encode($value);
-    }
+    // public function setProcedureAttribute($value)
+    // {
+    //     $this->attributes['procedure'] = json_encode($value);
+    // }
 
     /**
      *  User who created a recipe
