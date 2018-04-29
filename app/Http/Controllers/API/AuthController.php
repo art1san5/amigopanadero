@@ -29,6 +29,9 @@ class AuthController extends Controller
 
             $user = Auth::user();
             $success['token'] =  $user->createToken('AmigoPanadero')->accessToken;
+            $success['id'] = $user->id;
+            $success['email'] = $user->email;
+            $success['name'] = $user->name;
 
             return response()->json(['success' => $success], 200);
         
@@ -66,6 +69,8 @@ class AuthController extends Controller
         ]);
         
         $success['token'] = $user->createToken('AmigoPanadero')->accessToken;
+        $success['id'] = $user->id;
+        $success['email'] = $user->email;
         $success['name'] = $user->name;
 
         return response()->json(['success'=> $success], 200);
