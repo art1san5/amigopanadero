@@ -22,6 +22,11 @@ class Video extends Model
         'path'
     ];
 
+    public function getDates()
+    {
+        return [];
+    }
+
     /**
      *  User who created a recipe
      */

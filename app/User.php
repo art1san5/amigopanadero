@@ -23,6 +23,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function getDates()
+    {
+        return [];
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

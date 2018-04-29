@@ -11,6 +11,11 @@ class Category extends Model
         'category_image'
     ]; 
 
+    public function getDates()
+    {
+        return [];
+    }
+
     protected $visible = [
         'id',
         'name',

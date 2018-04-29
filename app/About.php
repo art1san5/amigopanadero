@@ -9,4 +9,9 @@ class About extends Model
     protected $fillable = [
         'about_company'
     ];
+
+    public function getDates()
+    {
+        return [];
+    }
 }

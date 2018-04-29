@@ -22,6 +22,11 @@ class Recipe extends Model
         'deleted_at'
     ];
 
+    public function getDates()
+    {
+        return [];
+    }
+
     protected $hidden = [
         'video_id',
         'category_id',

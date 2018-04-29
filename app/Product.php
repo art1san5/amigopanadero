@@ -15,6 +15,11 @@ class Product extends Model
         'product_category'
     ];
 
+    public function getDates()
+    {
+        return [];
+    }
+
     public function user() 
     {
         return $this->belongsTo(User::class);    
