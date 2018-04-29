@@ -102,8 +102,15 @@ class AmigoPanaderoController extends Controller
                     ->take(20)
                     ->get();
         
-        return $feed;
+        if (!count($feed) == 0) {
 
+            return $feed;
+        
+        } else {
+        
+            return $this->featured();
+        
+        }
     }
 
     /**
