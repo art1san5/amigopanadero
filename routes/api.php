@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::post('login','API\AuthController@login');
 Route::post('register','API\AuthController@register');
+Route::post('login','API\AuthController@login');
+
 
 // Featured Recipes
 Route::get('featuredRecipes','API\AmigoPanaderoController@featured');

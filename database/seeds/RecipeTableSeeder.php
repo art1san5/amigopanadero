@@ -87,9 +87,7 @@ class RecipeTableSeeder extends Seeder
                 'category_id' => '2',
                 'featured' => 'http://206.189.33.253/storage/features/french_bread_o.jpg',
                 'title' => 'French Bread',
-                'sponge' => json_encode([
-                    'no-sponge'
-                ]),
+                'sponge' => '',
                 'dough' => json_encode([
                     'Montana Spring Hard Flour 100 Bakers% or 1000g',
                     'Water 57 Bakers% or 570g',
@@ -117,9 +115,7 @@ class RecipeTableSeeder extends Seeder
                 'category_id' => '2',
                 'featured' => 'http://206.189.33.253/storage/features/burger_o.jpg',
                 'title' => 'Burger Buns',
-                'sponge' => json_encode([
-                    'no-sponge'
-                ]),
+                'sponge' => '',
                 'dough' => json_encode([
                     'Montana Spring Hard Flour 100 Bakers% or 1000g',
                     'Water 50 Bakers% or 500g',
