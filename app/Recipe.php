@@ -36,24 +36,29 @@ class Recipe extends Model
         'deleted_at'
     ];
 
-    protected $casts = [
-        'sponge' => 'array',
-        'dough' => 'array',
-        'procedure' => 'array',
-    ];
+    // protected $casts = [
+    //     'sponge' => 'array',
+    //     'dough' => 'array',
+    //     'procedure' => 'array',
+    // ];
 
     /**
      * Convet array to string conversion
      */
-    // public function setIngredientsAttribute($value)
-    // {
-    //     $this->attributes['ingredients'] = json_encode($value);
-    // }
+    public function setSpongeAttribute($value)
+    {
+        $this->attributes['sponge'] = json_encode($value);
+    }
 
-    // public function setProcedureAttribute($value)
-    // {
-    //     $this->attributes['procedure'] = json_encode($value);
-    // }
+    public function setDoughAttribute($value)
+    {
+        $this->attributes['dough'] = json_encode($value);
+    }
+
+    public function setProcedureAttribute($value)
+    {
+        $this->attributes['procedure'] = json_encode($value);
+    }
 
     /**
      *  User who created a recipe
