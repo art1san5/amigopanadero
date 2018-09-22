@@ -16,10 +16,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 
+        'name',
         'email',
         'phone_number',
-        'age', 
+        'age',
         'password',
     ];
 
@@ -59,6 +59,16 @@ class User extends Authenticatable
     public function categories()
     {
         return $this->hasMany(Category::class);
+    }
+
+    public function groceries()
+    {
+        return $this->hasMany(Grocery::class);
+    }
+
+    public function bakerymaths()
+    {
+        return $this->hasMany(Bakerymath::class);
     }
 
 }
