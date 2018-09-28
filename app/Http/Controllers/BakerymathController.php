@@ -39,7 +39,7 @@ class BakerymathController extends Controller
     {
         $this->validate($request,[
             'ingredient' => 'min:3|max:15|required|unique:bakerymaths',
-            'quantity' => 'required',
+            'quantity' => 'required|numeric',
             // not present on table * for checking only if flour is created in table
             'flour' => 'required',
             // 'user_id' => 'required'
@@ -96,7 +96,7 @@ class BakerymathController extends Controller
             // not present on table * for checking only if flour is created in table
             'flour' => 'required',
         ],[
-             'flour.required' => "The 'flour' should not be modefied"
+             'flour.required' => "The 'flour' should not be modified"
         ]);
 
         $bakerymath->ingredient = $request->input('ingredient');

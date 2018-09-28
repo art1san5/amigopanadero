@@ -15,8 +15,13 @@ class CreateGroceryItemsTable extends Migration
     {
         Schema::create('grocery_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('grocery_id');
-            $table->string('name');
+            $table->integer('user_id')->unsigned();
+            $table->integer('grocery_id')->unsigned();
+            $table->foreign('grocery_id')->references('id')->on('groceries')->onDelete('cascade');
+            $table->text('recipe');
+            $table->string('bakers')->nullable();
+            $table->string('grams')->nullable();
+            $table->integer('index')->unsigned();
             $table->boolean('isChecked')->default(0);
             $table->timestamps();
         });

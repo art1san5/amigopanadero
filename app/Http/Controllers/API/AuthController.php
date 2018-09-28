@@ -9,13 +9,13 @@ use App\User;
 
 class AuthController extends Controller
 {
-    
+
 
     /**
      * Login API
-     * 
+     *
      * @return \Illuminate\Http\Response
-     * 
+     *
      */
     public function login(Request $request)
     {
@@ -34,19 +34,19 @@ class AuthController extends Controller
             $success['name'] = $user->name;
 
             return response()->json(['success' => $success], 200);
-        
+
         } else {
 
             return response()->json(['error'=>'Unauthorised'], 401);
-        
+
         }
     }
 
     /**
      * Register API
-     * 
+     *
      * @return \Illuminate\Http\Response
-     * 
+     *
      */
     public function register(Request $request)
     {
@@ -54,33 +54,28 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
-            'phone_number' => 'required',
-            'age' => 'required',
-            // 'gender' => 'required'
         ]);
 
         $user = User::create([
     		'name' => request('name'),
     		'email' => request('email'),
             'password' => bcrypt(request('password')),
-            'phone_number' => request('phone_number'),
-            'age' => request('age'),
-            // 'gender' => request('gender')
         ]);
-        
+
         $success['token'] = $user->createToken('AmigoPanadero')->accessToken;
         $success['id'] = $user->id;
         $success['email'] = $user->email;
         $success['name'] = $user->name;
 
         return response()->json(['success'=> $success], 200);
+        // return $user;
     }
 
     /**
      *  Test Details API
-     * 
+     *
      * @return \Illuminate\Http\Response
-     * 
+     *
      */
     public function getDetails()
     {

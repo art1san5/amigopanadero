@@ -18,9 +18,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'phone_number',
-        'age',
         'password',
+        'age',
+        'phone_number',
     ];
 
     public function getDates()
@@ -64,6 +64,11 @@ class User extends Authenticatable
     public function groceries()
     {
         return $this->hasMany(Grocery::class);
+    }
+
+    public function groceryItems()
+    {
+        return $this->hasMany(GroceryItem::class);
     }
 
     public function bakerymaths()

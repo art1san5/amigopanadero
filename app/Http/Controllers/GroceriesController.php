@@ -10,14 +10,27 @@ use App\GroceryItem;
 
 class GroceriesController extends Controller
 {
+
+    public function fetchGroceries($user) {
+
+        $groceries = Grocery::where('user_id',$user)
+                        ->with('groceryItems')->get();
+
+        return $groceries;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($user)
+    public function fetchGroceryItem($grocery, $user)
     {
-        $showRecipe = Grocery::where('user_id',$user)->get();
+        $showRecipe = Grocery::where('user_id',$user)
+                        ->where('name', $grocery)
+                        ->with('groceryItems')->first();
+
         return $showRecipe;
     }
 
@@ -39,24 +52,31 @@ class GroceriesController extends Controller
      */
     public function store(Request $request)
     {
-            $this->validate($requeust, [
+            $this->validate($request, [
                 'name' => 'required',
                 'category' => 'required',
-                'recipe' => 'required'
+                'recipe' => 'required',
+                'index' => 'required',
             ]);
 
-            $findGrocery = Grocery::where('name',$request->input('name'))->first();
+            $grocery = Grocery::firstOrCreate([
+                'name' => $request->input('name')
+            ], [
+                'category' => $request->input('category'),
+                'user_id' => 1 // should be pass in parameter
+            ]);
 
-            if($findGrocery->isEmpty()) {
-                $grocery = Auth::user()->groceries()->create($request->all());
-            }
-
-            $groceryItem = new Grocery;
-            $groceryItem->name = $request->input('recipe');
-            $groceryItem->grocery()->associate( $findGrocery->isEmpty() ? $grocery->id : $findGrocery->id );
+            $groceryItem = new GroceryItem;
+            $groceryItem->recipe = $request->input('recipe');
+            $groceryItem->bakers = $request->input('bakers');
+            $groceryItem->grams = $request->input('grams');
+            $groceryItem->index = $request->input('index');
+            $groceryItem->user_id = 1; // should pass real user name on prod
+            $groceryItem->grocery()->associate($grocery->id);
             $groceryItem->save();
 
-            return response('Created', 201)->header('Content-Type', 'text/plain');
+            return $grocery;
+
     }
 
     /**
@@ -70,7 +90,8 @@ class GroceriesController extends Controller
     {
             $groceryItem->isChecked = !$groceryItem->isChecked;
             $groceryItem->save();
-            return response('Accepted', 202 )->header('Content-Type', 'text/plain');
+
+            return $groceryItem;
     }
 
     /**
@@ -107,38 +128,47 @@ class GroceriesController extends Controller
         //
     }
 
+    public function removeGroceryItem($userId, $groceryId, $groceryIndex)
+    {
+
+        $groceryItem = GroceryItem::where('user_id',$userId)
+        ->where('grocery_id', $groceryId)
+        ->where('index', $groceryIndex)
+        ->first();
+
+        $groceryItem->delete();
+
+        $findGrocery = Grocery::where('id',$groceryId)->first();
+        if($findGrocery->groceryItems()->count() == 0) {
+            $this->destroy($groceryId, $userId);
+        }
+
+        return response('Accepted', 202 )->header('Content-Type', 'application/json');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grocery $grocery)
+    public function destroy($groceryId, $userId)
     {
-        try {
 
-            $grocery->delete();
-            return response('Accepted', 202 )->header('Content-Type', 'text/plain');
+        $findGrocery = Grocery::where('id', $groceryId)
+                        ->where('user_id', $userId)
+                        ->with('groceryItems')
+                        ->delete();
 
-        } catch(\Exception $e) {
+        return response('Accepted', 202 )->header('Content-Type', 'text/plain');
 
-            return response('Connection Failure', 420)->header('Content-Type', 'application/json');
-
-        }
     }
 
     public function sweep($user)
     {
-        try {
-
-            $sweepGroceries = Grocery::where('user_id',$user)->delete();
-            return response('Accepted', 202 )->header('Content-Type', 'application/json');
-
-        } catch (\Exception $e) {
-
-            return response('Connection Failure', 420)->header('Content-Type', 'application/json');
-
-        }
+        $sweepGroceries = Grocery::where('user_id',$user)->delete();
+        return response('Accepted', 202 )->header('Content-Type', 'application/json');
+        return response('Connection Failure', 420)->header('Content-Type', 'application/json');
     }
 
 }

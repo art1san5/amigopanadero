@@ -17,7 +17,7 @@ class CreateBakerymathsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('ingredient');
-            $table->integer('quantity');
+            $table->double('quantity');
             $table->timestamps();
         });
     }

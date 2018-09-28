@@ -17,11 +17,13 @@ Route::get('/', function () {
 
 
 // user api token should pass to parameter
-Route::get('groceries/{user}','GroceriesController@index');
+Route::get('fetchGroceries/{user}','GroceriesController@fetchGroceries');
+Route::get('fetchGroceryItem/{grocery}/{user}','GroceriesController@fetchGroceryItem');
 Route::post('groceries','GroceriesController@store');
 Route::post('toggleRecipe/{groceryItem}','GroceriesController@toggleRecipe');
+Route::delete('removeGroceryItem/{userId}/{groceryId}/{groceryIndex}','GroceriesController@removeGroceryItem');
 // user api token should pass to parameter
-Route::delete('groceries/destroy/{user}','GroceriesController@destroy');
+Route::delete('groceries/destroy/{groceryId}/{userId}','GroceriesController@destroy');
 Route::delete('groceries/sweep/{user}','GroceriesController@sweep');
 
 //user api token should pass to parameter
