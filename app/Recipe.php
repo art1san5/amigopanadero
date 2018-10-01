@@ -16,6 +16,7 @@ class Recipe extends Model
         'sponge',
         'dough',
         'procedure',
+        'total'
     ];
 
     protected $dates = [
@@ -58,6 +59,11 @@ class Recipe extends Model
     public function setProcedureAttribute($value)
     {
         $this->attributes['procedure'] = json_encode($value);
+    }
+
+    public function setTotalAttribute($value)
+    {
+        $this->attributes['total'] = json_encode($value);
     }
 
     /**

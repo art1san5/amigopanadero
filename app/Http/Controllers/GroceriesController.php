@@ -11,9 +11,9 @@ use App\GroceryItem;
 class GroceriesController extends Controller
 {
 
-    public function fetchGroceries($user) {
+    public function fetchGroceries() {
 
-        $groceries = Grocery::where('user_id',$user)
+        $groceries = Grocery::where('user_id', Auth::user()->id)
                         ->with('groceryItems')->get();
 
         return $groceries;
@@ -25,9 +25,9 @@ class GroceriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fetchGroceryItem($grocery, $user)
+    public function fetchGroceryItem($grocery)
     {
-        $showRecipe = Grocery::where('user_id',$user)
+        $showRecipe = Grocery::where('user_id', Auth::user()->id)
                         ->where('name', $grocery)
                         ->with('groceryItems')->first();
 
@@ -63,7 +63,7 @@ class GroceriesController extends Controller
                 'name' => $request->input('name')
             ], [
                 'category' => $request->input('category'),
-                'user_id' => 1 // should be pass in parameter
+                'user_id' => Auth::user()->id // should be pass in parameter
             ]);
 
             $groceryItem = new GroceryItem;
@@ -71,7 +71,7 @@ class GroceriesController extends Controller
             $groceryItem->bakers = $request->input('bakers');
             $groceryItem->grams = $request->input('grams');
             $groceryItem->index = $request->input('index');
-            $groceryItem->user_id = 1; // should pass real user name on prod
+            $groceryItem->user_id = Auth::user()->id; // should pass real user name on prod
             $groceryItem->grocery()->associate($grocery->id);
             $groceryItem->save();
 
@@ -86,7 +86,7 @@ class GroceriesController extends Controller
      * @param GroceryItem $groceryItem
      * @return \Illuminate\Http\Response
      */
-    public function toggleRecipe(Request $request, GroceryItem $groceryItem)
+    public function toggleIngredient(GroceryItem $groceryItem)
     {
             $groceryItem->isChecked = !$groceryItem->isChecked;
             $groceryItem->save();
@@ -128,10 +128,10 @@ class GroceriesController extends Controller
         //
     }
 
-    public function removeGroceryItem($userId, $groceryId, $groceryIndex)
+    public function removeGroceryItem($groceryId, $groceryIndex)
     {
 
-        $groceryItem = GroceryItem::where('user_id',$userId)
+        $groceryItem = GroceryItem::where('user_id',Auth::user()->id)
         ->where('grocery_id', $groceryId)
         ->where('index', $groceryIndex)
         ->first();
@@ -140,7 +140,7 @@ class GroceriesController extends Controller
 
         $findGrocery = Grocery::where('id',$groceryId)->first();
         if($findGrocery->groceryItems()->count() == 0) {
-            $this->destroy($groceryId, $userId);
+            $this->destroy($groceryId);
         }
 
         return response('Accepted', 202 )->header('Content-Type', 'application/json');
@@ -152,11 +152,11 @@ class GroceriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($groceryId, $userId)
+    public function destroy($groceryId)
     {
 
         $findGrocery = Grocery::where('id', $groceryId)
-                        ->where('user_id', $userId)
+                        ->where('user_id', Auth::user()->id)
                         ->with('groceryItems')
                         ->delete();
 
@@ -164,11 +164,10 @@ class GroceriesController extends Controller
 
     }
 
-    public function sweep($user)
+    public function sweep()
     {
-        $sweepGroceries = Grocery::where('user_id',$user)->delete();
+        $sweepGroceries = Grocery::where('user_id', Auth::user()->id)->delete();
         return response('Accepted', 202 )->header('Content-Type', 'application/json');
-        return response('Connection Failure', 420)->header('Content-Type', 'application/json');
     }
 
 }
