@@ -26,7 +26,7 @@ class ProductsImageSeeder extends Seeder
             ]);
 
         DB::table('abouts')
-            ->where('id',2)
+            ->where('id',3)
             ->update([
                 'product_image' => 'http://206.189.33.253/storage/about_products/specialized_flour.png',
                 'updated_at' => Carbon\Carbon::now(),
