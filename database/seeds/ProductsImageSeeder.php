@@ -14,21 +14,21 @@ class ProductsImageSeeder extends Seeder
         DB::table('abouts')
             ->where('id',1)
             ->update([
-                'product_image' => 'http://206.189.33.253/storage/about_products/hard_flour.png',
+                'product_image' => 'http://206.189.33.253/storage/about_products/hard_flour_slide.jpg',
                 'updated_at' => Carbon\Carbon::now(),
             ]);
 
         DB::table('abouts')
             ->where('id',2)
             ->update([
-                'product_image' => 'http://206.189.33.253/storage/about_products/soft_flour.png',
+                'product_image' => 'http://206.189.33.253/storage/about_products/soft_flour_slide.jpg',
                 'updated_at' => Carbon\Carbon::now(),
             ]);
 
         DB::table('abouts')
             ->where('id',3)
             ->update([
-                'product_image' => 'http://206.189.33.253/storage/about_products/specialized_flour.png',
+                'product_image' => 'http://206.189.33.253/storage/about_products/specialized_flour_slide.jpg',
                 'updated_at' => Carbon\Carbon::now(),
             ]);
     }
