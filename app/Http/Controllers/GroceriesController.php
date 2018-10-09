@@ -60,10 +60,10 @@ class GroceriesController extends Controller
             ]);
 
             $grocery = Grocery::firstOrCreate([
-                'name' => $request->input('name')
+                'name' => $request->input('name'),
+                'user_id' => Auth::user()->id // should be pass in parameter
             ], [
                 'category' => $request->input('category'),
-                'user_id' => Auth::user()->id // should be pass in parameter
             ]);
 
             $groceryItem = new GroceryItem;
